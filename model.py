@@ -1,4 +1,4 @@
-import data_processing as dp
+import data_pre_processing as dp
 
 
 class StockPredictor:
