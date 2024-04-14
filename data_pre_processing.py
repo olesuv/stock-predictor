@@ -5,7 +5,15 @@ import os
 
 class DataPreProcessing:
     """
-    This class handles the data pre-processing for stock predictor.
+    A class for loading and preprocessing data for stock prediction.
+
+    Attributes:
+        path (str): The path to the directory containing the CSV files.
+        data (pd.DataFrame): The preprocessed data.
+
+    Methods:
+        load_data(file_path: str) -> None: Loads the data from the specified file path.
+        get_data() -> dict: Returns the preprocessed data.
     """
 
     def __init__(self) -> None:
@@ -43,13 +51,16 @@ class DataPreProcessing:
             df_cryptos.append(crypto_csv)
 
         df = pd.concat(df_cryptos, ignore_index=True)
+        df['Average'] = (df['High'] + df['Low']) / 2
+        df = df.sort_values('Date', ascending=True)
+
         self.data = df
 
     def get_data(self) -> dict:
         """
-        Returns the dictionary containing the loaded data.
+        Returns the preprocessed data.
 
         Returns:
-            dict: The dictionary containing the loaded data.
+            dict: The preprocessed data.
         """
         return self.data
