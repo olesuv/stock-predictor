@@ -1,40 +1,55 @@
-import glob
 import pandas as pd
+import glob
+import os
 
 
 class DataPreProcessing:
     """
-    This class represents a data pre-processing utility for handling CSV files.
-    It provides methods to read CSV files from a specified directory and store them
-    in a dictionary, as well as retrieve the stored data.
-
-    Attributes:
-        file_path (str): The path to the directory containing the CSV files.
-        data (dict): A dictionary containing the CSV file names as keys and the
-        corresponding pandas dataframes as values.
+    This class handles the data pre-processing for stock predictor.
     """
 
-    def __init__(self, file_path: str) -> None:
-        self.file_path = file_path
+    def __init__(self) -> None:
+        self.path = None
         self.data = None
 
-    def load_data(self) -> None:
+    def load_data(self, file_path: str) -> None:
         """
-        This method reads the CSV files from the data folder and stores them
-        in a dictionary with the file name as the key and the pandas dataframe
-        as the value. (NOT IMPLEMENTED YET)
+        Loads the data from the specified file path.
+
+        Args:
+            file_path (str): The path to the directory containing the CSV files.
+
+        Raises:
+            FileNotFoundError: If the specified path does not exist.
+            FileNotFoundError: If no CSV files are found in the directory.
         """
-        df = {}
-        csv_files = glob.glob(self.path + "/*.csv")
+        if not os.path.exists(file_path):
+            raise FileNotFoundError(f"Path '{file_path}' does not exist.")
+        self.path = file_path
+
+        df_cryptos = []
+
+        csv_files = glob.glob(f"{self.path}/*.csv")
+        csv_files = [file for file in csv_files if not file.endswith(
+            'Current Crypto leaderboard.csv')]
+
+        if not csv_files:
+            raise FileNotFoundError("No CSV files found in the directory.")
 
         for file in csv_files:
             crypto_csv = pd.read_csv(file)
-            df[file] = crypto_csv
+            crypto_name = file.split('/')[-1].split('.')[0]
+            crypto_csv['Name'] = crypto_name
+            df_cryptos.append(crypto_csv)
 
+        df = pd.concat(df_cryptos, ignore_index=True)
         self.data = df
 
     def get_data(self) -> dict:
         """
-        This method returns the dictionary containing the data.
+        Returns the dictionary containing the loaded data.
+
+        Returns:
+            dict: The dictionary containing the loaded data.
         """
         return self.data
