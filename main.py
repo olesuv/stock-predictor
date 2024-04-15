@@ -9,6 +9,6 @@ if __name__ == '__main__':
     stock = dpp.get_stock_data('bitcoin')
     print(stock)
 
-    # model = m.StockPredictor()
-    # model.load_data(stock)
-    # model.benchamrk_model()
+    model = m.StockPredictor()
+    y_pred = model.train(x_train=dpp.x_train, y_train=dpp.y_train)
+    model.benchmark(y_train=dpp.y_train, y_pred=y_pred)
