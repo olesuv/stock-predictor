@@ -1,7 +1,8 @@
 ## Model:
 
-- [ ] training
-- [ ] class / module
+- [x] training
+- [ ] predict for user date
+- [x] class / module
 - [ ] error handling
 - [ ] tests
 
@@ -9,5 +10,6 @@
 
 - [x] preprocessing
 - [x] class / module
+- [ ] train for whole dates
 - [ ] error handling
 - [ ] tests
