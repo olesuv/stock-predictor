@@ -12,3 +12,5 @@ if __name__ == '__main__':
     model = m.StockPredictor()
     y_pred = model.train(x_train=dpp.x_train, y_train=dpp.y_train)
     model.benchmark(y_train=dpp.y_train, y_pred=y_pred)
+
+    # test for commit
