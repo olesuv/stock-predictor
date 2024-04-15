@@ -1,3 +1,4 @@
+import datetime as dt
 import pandas as pd
 import glob
 import os
@@ -46,6 +47,10 @@ class DataPreProcessing:
 
         for file in csv_files:
             crypto_csv = pd.read_csv(file)
+
+            crypto_csv['Date'] = pd.to_datetime(crypto_csv['Date'])
+            crypto_csv['Date'] = crypto_csv['Date'].map(dt.datetime.toordinal)
+
             crypto_name = file.split('/')[-1].split('.')[0]
             df_cryptos[crypto_name] = crypto_csv.sort_values(
                 'Date', ascending=True)
