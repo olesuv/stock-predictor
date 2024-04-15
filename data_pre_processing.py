@@ -3,35 +3,15 @@ import pandas as pd
 import glob
 import os
 
+from sklearn.discriminant_analysis import StandardScaler
+from sklearn.model_selection import train_test_split
+
 
 class DataPreProcessing:
-    """
-    A class for loading and preprocessing data for stock prediction.
-
-    Attributes:
-        path (str): The path to the directory containing the CSV files.
-        data (pd.DataFrame): The preprocessed data.
-
-    Methods:
-        load_data(file_path: str) -> None: Loads the data from the specified file path.
-        get_data() -> dict: Returns the preprocessed data.
-    """
-
     def __init__(self) -> None:
-        self.path = None
-        self.data = None
+        pass
 
     def load_data(self, file_path: str) -> None:
-        """
-        Loads the data from the specified file path.
-
-        Args:
-            file_path (str): The path to the directory containing the CSV files.
-
-        Raises:
-            FileNotFoundError: If the specified path does not exist.
-            FileNotFoundError: If no CSV files are found in the directory.
-        """
         if not os.path.exists(file_path):
             raise FileNotFoundError(f"Path '{file_path}' does not exist.")
         self.path = file_path
@@ -57,11 +37,31 @@ class DataPreProcessing:
 
         self.data = df_cryptos
 
-    def get_data(self) -> dict:
-        """
-        Returns the preprocessed data.
+    def process_stock_data(self, stock_name: str):
+        stock_data = self.get_stock_data(stock_name)
+        self.x = stock_data[['Date', 'Open', 'High', 'Low', 'Volume']]
+        self.y = stock_data['Close']
 
-        Returns:
-            dict: The preprocessed data.
-        """
-        return self.data
+        self.x_train, self.x_test, self.y_train, self.y_test = train_test_split(
+            self.x, self.y, test_size=0.2, random_state=42)
+
+        self.standardize_data()
+
+    def get_stock_data(self, stock_name: str) -> pd.DataFrame:
+        if stock_name not in self.data:
+            raise ValueError(f"{stock_name} not found in the data.")
+
+        return self.data[stock_name]
+
+    def standardize_data(self) -> None:
+        if not hasattr(self, 'x_train') or not hasattr(self, 'x_test'):
+            raise ValueError(
+                "Data not processed. Call 'process_stock_data' first.")
+
+        scaler = StandardScaler()
+        self.x_train = scaler.fit_transform(self.x_train)
+        self.x_test = scaler.transform(self.x_test)
+
+    def get_stocks_data(self) -> dict:
+        if not hasattr(self, 'data'):
+            raise ValueError("Data not loaded. Call 'load_data' first.")
