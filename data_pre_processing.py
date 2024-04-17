@@ -47,6 +47,18 @@ class DataPreProcessing:
 
         self.standardize_data()
 
+    def process_whole_stock_data(self, stock_name: str):
+        stock_data = self.get_stock_data(stock_name)
+        self.x = stock_data[['Date', 'Open', 'High', 'Low', 'Volume']]
+        self.y = stock_data['Close']
+
+        self.x_train = self.x
+        self.x_test = None
+        self.y_train = self.y
+        self.y_test = None
+
+        self.standardize_data()
+
     def get_stock_data(self, stock_name: str) -> pd.DataFrame:
         if stock_name not in self.data:
             raise ValueError(f"{stock_name} not found in the data.")
@@ -54,6 +66,10 @@ class DataPreProcessing:
         return self.data[stock_name]
 
     def standardize_data(self) -> None:
+        if hasattr(self, 'x_train') and self.x_test == None:
+            scaler = StandardScaler()
+            self.x_train = scaler.fit_transform(self.x_train)
+            return
         if not hasattr(self, 'x_train') or not hasattr(self, 'x_test'):
             raise ValueError(
                 "Data not processed. Call 'process_stock_data' first.")
