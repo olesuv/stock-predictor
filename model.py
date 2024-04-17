@@ -25,14 +25,16 @@ class StockPredictor:
     def benchmark(self, y_train, y_pred) -> None:
         train_mse = mean_squared_error(y_train, y_pred)
         train_r2 = r2_score(y_train, y_pred)
-        # train_mape = mape(y_train, y_pred)
+        train_mape = self.mape(y_train, y_pred)
 
+        print()
         print(f"Train time: {self.train_time} seconds")
+        print(f"Train MSE: {train_mse:.2f}")
+        print(f"Train R2: {train_r2:.2%}")
+        print(f"Train MAPE: {train_mape:.2%}")
 
-        print(f"Train MSE: {train_mse}")
-        print(f"Train R2: {train_r2}")
-        # print(f"Train MAPE: {train_mape}")
-
-    def mape(a, b) -> float:
+    def mape(self, a, b) -> float:
         mask = a != 0
-        return (np.fabs(a - b)/a)[mask].mean()
+        absolute_percentage_errors = np.abs(
+            (a - b) / np.maximum(np.abs(a), 1e-8))
+        return absolute_percentage_errors[mask].mean()
