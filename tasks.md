@@ -10,6 +10,6 @@
 
 - [x] preprocessing
 - [x] class / module
-- [ ] train for whole dates
+- [x] train for whole dates
 - [ ] error handling
 - [ ] tests
