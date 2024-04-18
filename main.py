@@ -20,5 +20,7 @@ if __name__ == '__main__':
     print(stock)
 
     model = m.StockPredictor()
-    y_pred = model.train(dpp.x_train, dpp.y_train)
+    model.train(dpp.x_train, dpp.y_train)
+    y_pred = model.predict(dpp.x_train)
     model.benchmark(dpp.y_train, y_pred)
+    model.plot(dpp.x_train, dpp.y_train, y_pred)
