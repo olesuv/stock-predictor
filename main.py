@@ -1,3 +1,5 @@
+import datetime as dt
+import numpy as np
 import data_pre_processing as dpp
 import model as m
 
@@ -11,6 +13,10 @@ if __name__ == '__main__':
         'Volume': 240218
     }
     # real close price: $22,609.16
+    ordinal_date = dt.datetime.strptime(
+        user_input['Date'], '%Y-%m-%d').date().toordinal()
+    user_input['Date'] = ordinal_date
+    user_input = np.array(list(user_input.values())).reshape(1, -1)
 
     dpp = dpp.DataPreProcessing()
     dpp.load_data('data')
@@ -19,6 +25,7 @@ if __name__ == '__main__':
 
     model = m.StockPredictor()
     model.train(dpp.x_train, dpp.y_train)
-    y_pred = model.predict(dpp.x_train)
-    model.benchmark(dpp.y_train, y_pred)
-    model.plot(dpp.x_train, dpp.y_train, y_pred)
+    y_pred = model.predict(user_input)
+    print(y_pred)
+    # model.benchmark(dpp.y_train, y_pred)
+    # model.plot(dpp.x_train, dpp.y_train, y_pred)
