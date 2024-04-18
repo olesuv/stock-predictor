@@ -11,5 +11,6 @@
 - [x] preprocessing
 - [x] class / module
 - [x] train for whole dates
+- [ ] standardize for user input as well
 - [ ] error handling
 - [ ] tests
