@@ -45,8 +45,6 @@ class DataPreProcessing:
         self.x_train, self.x_test, self.y_train, self.y_test = train_test_split(
             self.x, self.y, test_size=0.2, random_state=42)
 
-        self.standardize_data()
-
     def process_whole_stock_data(self, stock_name: str):
         stock_data = self.get_stock_data(stock_name)
         self.x = stock_data[['Date', 'Open', 'High', 'Low', 'Volume']]
@@ -56,8 +54,6 @@ class DataPreProcessing:
         self.x_test = None
         self.y_train = self.y
         self.y_test = None
-
-        self.standardize_data()
 
     def get_stock_data(self, stock_name: str) -> pd.DataFrame:
         if stock_name not in self.data:

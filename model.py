@@ -44,6 +44,7 @@ class StockPredictor:
         df_pred = pd.DataFrame(
             {'Actual': y_train, 'Predicted': y_pred, 'Date': x_train[:, 0]})
         df_pred.sort_values(by='Date', inplace=True)
+        print()
         print(df_pred)
 
         plt.plot(df_pred['Date'], df_pred['Actual'], label='Actual')
