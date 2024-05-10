@@ -1,7 +1,6 @@
 ## Model:
 
 - [x] training
-- [ ] predict for user date
 - [x] class / module
 - [ ] error handling
 - [ ] tests
@@ -11,6 +10,10 @@
 - [x] preprocessing
 - [x] class / module
 - [x] train for whole dates
-- [ ] standardize for user input as well
 - [ ] error handling
 - [ ] tests
+
+## Features:
+
+- [ ] predict for user date
+- [ ] standardize for user input as well
