@@ -8,14 +8,14 @@ For detailed data research and model research check files: `data_research.ipynb`
 Go to `~/main.py` and on 8 row selelct your crypto from `~/data/`. Example:
 
 ```python
-    dpp.process_whole_stock_data('bitcoin')
+dpp.process_whole_stock_data('bitcoin')
 ```
 
 ## Output
 
 Returns training / prediction metricks and plots diagram for check data correctness. Example output:
 
-```zsh
+```console
 (venv) ➜  stock-predictor git:(main) python3 main.py
 
 Train time: 0.0047833919525146484 seconds
