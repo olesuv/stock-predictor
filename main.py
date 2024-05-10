@@ -1,5 +1,5 @@
-import data_pre_processing as dpp
-import model as m
+import model.data_pre_processing as dpp
+import model.model as m
 
 
 if __name__ == '__main__':

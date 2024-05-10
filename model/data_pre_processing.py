@@ -8,10 +8,33 @@ from sklearn.model_selection import train_test_split
 
 
 class DataPreProcessing:
+    """
+    A class for data pre-processing in stock prediction.
+
+    Methods:
+    - load_data(file_path: str) -> None: Loads the data from the specified file path.
+    - process_stock_data(stock_name: str): Processes the stock data for a specific stock.
+    - process_whole_stock_data(stock_name: str): Processes the entire stock data for a specific stock.
+    - get_stock_data(stock_name: str) -> pd.DataFrame: Retrieves the stock data for a specific stock.
+    - standardize_data() -> None: Standardizes the data.
+    - get_stocks_data() -> dict: Retrieves the loaded stock data.
+    """
+
     def __init__(self) -> None:
         pass
 
     def load_data(self, file_path: str) -> None:
+        """
+        Loads the data from the specified file path.
+
+        Args:
+        - file_path (str): The path to the directory containing the CSV files.
+
+        Raises:
+        - FileNotFoundError: If the specified file path does not exist.
+        - FileNotFoundError: If no CSV files are found in the directory.
+        """
+
         if not os.path.exists(file_path):
             raise FileNotFoundError(f"Path '{file_path}' does not exist.")
         self.path = file_path
@@ -38,6 +61,16 @@ class DataPreProcessing:
         self.data = df_cryptos
 
     def process_stock_data(self, stock_name: str):
+        """
+        Processes the stock data for a specific stock.
+
+        Args:
+        - stock_name (str): The name of the stock.
+
+        Raises:
+        - ValueError: If the specified stock name is not found in the data.
+        """
+
         stock_data = self.get_stock_data(stock_name)
         self.x = stock_data[['Date', 'Open', 'High', 'Low', 'Volume']]
         self.y = stock_data['Close']
@@ -46,6 +79,16 @@ class DataPreProcessing:
             self.x, self.y, test_size=0.2, random_state=42)
 
     def process_whole_stock_data(self, stock_name: str):
+        """
+        Processes the entire stock data for a specific stock.
+
+        Args:
+        - stock_name (str): The name of the stock.
+
+        Raises:
+        - ValueError: If the specified stock name is not found in the data.
+        """
+
         stock_data = self.get_stock_data(stock_name)
         self.x = stock_data[['Date', 'Open', 'High', 'Low', 'Volume']]
         self.y = stock_data['Close']
@@ -56,12 +99,32 @@ class DataPreProcessing:
         self.y_test = None
 
     def get_stock_data(self, stock_name: str) -> pd.DataFrame:
+        """
+        Retrieves the stock data for a specific stock.
+
+        Args:
+        - stock_name (str): The name of the stock.
+
+        Returns:
+        - pd.DataFrame: The stock data for the specified stock.
+
+        Raises:
+        - ValueError: If the specified stock name is not found in the data.
+        """
+
         if stock_name not in self.data:
             raise ValueError(f"{stock_name} not found in the data.")
 
         return self.data[stock_name]
 
     def standardize_data(self) -> None:
+        """
+        Standardizes the data.
+
+        Raises:
+        - ValueError: If the data has not been processed yet.
+        """
+
         if hasattr(self, 'x_train') and self.x_test == None:
             scaler = StandardScaler()
             self.x_train = scaler.fit_transform(self.x_train)
@@ -75,5 +138,15 @@ class DataPreProcessing:
         self.x_test = scaler.transform(self.x_test)
 
     def get_stocks_data(self) -> dict:
+        """
+        Retrieves the loaded stock data.
+
+        Returns:
+        - dict: The loaded stock data.
+
+        Raises:
+        - ValueError: If the data has not been loaded yet.
+        """
+
         if not hasattr(self, 'data'):
             raise ValueError("Data not loaded. Call 'load_data' first.")
