@@ -1,11 +1,11 @@
 ## Predict your favourite crypto price (in availbale date range)
 
-Project is only code based (no ui or terminal commands) and focused on building regresion model for crypto u will choose.
-For detailed data research and model research check files: `data_research.ipynb` and `model_research.ipynb`.
+Project is only code based (no ui or terminal commands) and focused on building regresion model for crypto u will choose from dataset (`~/data/` dir).
+For detailed data research and model research check files: `~/data_research.ipynb` and `~/model_research.ipynb`.
 
 ## Input
 
-Go to `~/main.py` and on 8 row selelct your crypto from `~/data/`. Example:
+Go to `~/main.py` and on 8 row select your crypto from `~/data/`. Example:
 
 ```python
 dpp.process_whole_stock_data('bitcoin')
@@ -16,7 +16,7 @@ dpp.process_whole_stock_data('bitcoin')
 Returns training / prediction metricks and plots diagram for check data correctness. Example output:
 
 ```console
-(venv) ➜  stock-predictor git:(main) python3 main.py
+foo@bar:stock-predictor$ pip3 install -r requirements.txt && python3 main.py
 
 Train time: 0.0047833919525146484 seconds
 Train MSE: 76490.93
